@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sarojini Swaminathan — Multidisciplinary Designer</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Background Ambience & Grid -->
+  <div class="bg-glow"></div>
+  <div class="bg-grid"></div>
+
+  <!-- Top Navigation Header -->
+  <header class="site-header">
+    <div class="brand">
+      <span class="name">Sarojini Swaminathan</span>
+      <span class="tagline">B.Des Student &bull; FLAME University</span>
+    </div>
+    
+    <div class="status-badge">
+      <span class="pulse-dot"></span>
+      <span class="status-text">Available for 2026/2027 Internships</span>
+    </div>
+
+    <nav class="nav-links">
+      <a href="https://github.com/sarojiniswaminathan" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/sarojini-s-al0b80331/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.behance.net/sarojinis" target="_blank" rel="noopener">Behance</a>
+      <a href="mailto:saro24jini@gmail.com" class="contact-pill">Get in Touch</a>
+    </nav>
+  </header>
+
+  <!-- Hero Information Bar -->
+  <section class="hero-bar">
+    <div class="hero-col">
+      <p class="label">DISCIPLINE</p>
+      <p class="val">UI/UX &bull; Product &bull; Visual Systems</p>
+    </div>
+    <div class="hero-col center-txt">
+      <p class="instruction">&larr; Scroll, drag, or arrow keys to rotate cards in orbit &rarr;</p>
+    </div>
+    <div class="hero-col right-txt">
+      <p class="label">LOCATION</p>
+      <p class="val">Pune / Chennai, India</p>
+    </div>
+  </section>
+
+  <!-- Circular Dial & Interactive Radial Arena -->
+  <main class="radial-stage" id="stage">
+    
+    <!-- Central Dial / Compass Indicator -->
+    <div class="central-dial">
+      <div class="dial-outer-ring"></div>
+      <div class="dial-inner-hub">
+        <span class="arrow-up">&#9650;</span>
+        <span class="dial-title">ME</span>
+        <span class="dial-angle" id="degReadout">0&deg;</span>
+      </div>
+    </div>
+
+    <!-- Orbit Container for Distributed Solid Cards -->
+    <div class="orbit-wheel" id="orbitWheel">
+      <!-- Injected dynamically via script.js -->
+    </div>
+
+  </main>
+
+  <!-- Bottom Floating Control Deck -->
+  <footer class="bottom-bar">
+    <div class="scroll-indicator">
+      <div class="mouse-icon">
+        <div class="wheel-dot"></div>
+      </div>
+      <span>Scroll mouse wheel or drag horizontally</span>
+    </div>
+
+    <div class="deck-actions">
+      <button class="nav-btn" id="prevBtn" title="Rotate Counter-Clockwise">&#8592; Prev</button>
+      <button class="nav-btn" id="nextBtn" title="Rotate Clockwise">Next &#8594;</button>
+      <button class="nav-btn highlight" id="recenterBtn">Reset Orbit</button>
+    </div>
+  </footer>
+
+  <!-- Modal Project Case Study Drawer -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal-window">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      
+      <div class="modal-header-tag" id="modalCategoryTag">UI/UX DESIGN</div>
+      <h2 class="modal-title" id="modalTitle">Project Title</h2>
+      <p class="modal-meta" id="modalMeta">Role &bull; Year</p>
+
+      <div class="modal-divider"></div>
+
+      <div class="modal-body-section">
+        <h3>Overview</h3>
+        <p id="modalOverview">Detailed overview goes here.</p>
+      </div>
+
+      <div class="modal-body-section">
+        <h3>Core Deliverables</h3>
+        <ul id="modalDeliverables"></ul>
+      </div>
+
+      <div class="modal-body-section">
+        <h3>Tools &amp; Technologies</h3>
+        <div class="tag-cloud" id="modalTags"></div>
+      </div>
+
+      <div class="modal-footer-actions">
+        <a href="https://github.com/sarojiniswaminathan" target="_blank" rel="noopener" class="action-btn outline">View Repositories</a>
+        <a href="mailto:saro24jini@gmail.com" class="action-btn fill">Contact Sarojini</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- External Script -->
+  <script src="script.js"></script>
+</body>
+</html>
