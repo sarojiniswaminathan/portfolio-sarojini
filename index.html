@@ -8,89 +8,87 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- External Stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Background Ambience & Grid -->
+  <!-- Ambient background -->
   <div class="bg-glow"></div>
   <div class="bg-grid"></div>
 
-  <!-- Top Navigation Header -->
+  <!-- Header -->
   <header class="site-header">
     <div class="brand">
       <span class="name">Sarojini Swaminathan</span>
-      <span class="tagline">B.Des Student &bull; FLAME University</span>
+      <span class="tagline">B.Des &bull; FLAME University</span>
     </div>
     
     <div class="status-badge">
       <span class="pulse-dot"></span>
-      <span class="status-text">Available for 2026/2027 Internships</span>
+      <span class="status-text">Available for Design Roles</span>
     </div>
 
     <nav class="nav-links">
+      <a href="#orbitSection">Selected Work</a>
+      <a href="#internshipsSection">Internships</a>
+      <a href="https://www.behance.net/sarojinis" target="_blank" rel="noopener">Behance</a>
       <a href="https://github.com/sarojiniswaminathan" target="_blank" rel="noopener">GitHub</a>
       <a href="https://www.linkedin.com/in/sarojini-s-al0b80331/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://www.behance.net/sarojinis" target="_blank" rel="noopener">Behance</a>
       <a href="mailto:saro24jini@gmail.com" class="contact-pill">Get in Touch</a>
     </nav>
   </header>
 
-  <!-- Hero Information Bar -->
-  <section class="hero-bar">
-    <div class="hero-col">
-      <p class="label">DISCIPLINE</p>
-      <p class="val">UI/UX &bull; Product &bull; Visual Systems</p>
+  <!-- Control & Category Bar -->
+  <section class="controls-bar" id="orbitSection">
+    <div class="category-pills" id="categoryFilterBar">
+      <button class="filter-pill active" data-filter="ALL">All Categories</button>
+      <button class="filter-pill" data-filter="UI/UX DESIGN">UI/UX Design</button>
+      <button class="filter-pill" data-filter="GRAPHIC DESIGN">Graphic Design</button>
+      <button class="filter-pill" data-filter="SEWING">Sewing</button>
+      <button class="filter-pill" data-filter="OTHER PROJECTS">Other Projects</button>
     </div>
-    <div class="hero-col center-txt">
-      <p class="instruction">&larr; Scroll, drag, or arrow keys to rotate cards in orbit &rarr;</p>
-    </div>
-    <div class="hero-col right-txt">
-      <p class="label">LOCATION</p>
-      <p class="val">Pune / Chennai, India</p>
-    </div>
+    <p class="instruction">&larr; Scroll wheel or drag to rotate &bull; Hover card to flip &rarr;</p>
   </section>
 
-  <!-- Circular Dial & Interactive Radial Arena -->
+  <!-- Circular Dial & Distributed Orbit Stage -->
   <main class="radial-stage" id="stage">
     
-    <!-- Central Dial / Compass Indicator -->
+    <!-- Center Compass Hub -->
     <div class="central-dial">
       <div class="dial-outer-ring"></div>
       <div class="dial-inner-hub">
         <span class="arrow-up">&#9650;</span>
-        <span class="dial-title">ME</span>
+        <span class="dial-title">SARO</span>
         <span class="dial-angle" id="degReadout">0&deg;</span>
       </div>
     </div>
 
-    <!-- Orbit Container for Distributed Solid Cards -->
-    <div class="orbit-wheel" id="orbitWheel">
-      <!-- Injected dynamically via script.js -->
-    </div>
+    <!-- Radial Orbit Container -->
+    <div class="orbit-wheel" id="orbitWheel"></div>
 
   </main>
 
-  <!-- Bottom Floating Control Deck -->
-  <footer class="bottom-bar">
-    <div class="scroll-indicator">
-      <div class="mouse-icon">
-        <div class="wheel-dot"></div>
-      </div>
-      <span>Scroll mouse wheel or drag horizontally</span>
+  <!-- Orbit Controls -->
+  <div class="orbit-quick-controls">
+    <button class="nav-btn" id="prevBtn">&#8592; Prev</button>
+    <button class="nav-btn" id="nextBtn">Next &#8594;</button>
+    <button class="nav-btn highlight" id="recenterBtn">Reset Orbit</button>
+  </div>
+
+  <!-- Dedicated Internships Segment -->
+  <section class="internships-section" id="internshipsSection">
+    <div class="section-heading">
+      <p class="section-subtitle">EXPERIENCE & PRACTICUM</p>
+      <h2 class="section-title">Industry Internships</h2>
+      <div class="accent-line"></div>
     </div>
 
-    <div class="deck-actions">
-      <button class="nav-btn" id="prevBtn" title="Rotate Counter-Clockwise">&#8592; Prev</button>
-      <button class="nav-btn" id="nextBtn" title="Rotate Clockwise">Next &#8594;</button>
-      <button class="nav-btn highlight" id="recenterBtn">Reset Orbit</button>
-    </div>
-  </footer>
+    <div class="internships-grid" id="internshipsGrid"></div>
+  </section>
 
-  <!-- Modal Project Case Study Drawer -->
+  <!-- Modal Case Study Drawer -->
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal-window">
       <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
@@ -103,27 +101,26 @@
 
       <div class="modal-body-section">
         <h3>Overview</h3>
-        <p id="modalOverview">Detailed overview goes here.</p>
+        <p id="modalOverview"></p>
       </div>
 
       <div class="modal-body-section">
-        <h3>Core Deliverables</h3>
+        <h3>Key Deliverables</h3>
         <ul id="modalDeliverables"></ul>
       </div>
 
       <div class="modal-body-section">
-        <h3>Tools &amp; Technologies</h3>
+        <h3>Skills &amp; Methodologies</h3>
         <div class="tag-cloud" id="modalTags"></div>
       </div>
 
       <div class="modal-footer-actions">
-        <a href="https://github.com/sarojiniswaminathan" target="_blank" rel="noopener" class="action-btn outline">View Repositories</a>
-        <a href="mailto:saro24jini@gmail.com" class="action-btn fill">Contact Sarojini</a>
+        <a id="modalExternalLink" href="https://www.behance.net/sarojinis" target="_blank" rel="noopener" class="action-btn outline">View on Behance &rarr;</a>
+        <a href="mailto:saro24jini@gmail.com" class="action-btn fill">Get in Touch</a>
       </div>
     </div>
   </div>
 
-  <!-- External Script -->
   <script src="script.js"></script>
 </body>
 </html>
