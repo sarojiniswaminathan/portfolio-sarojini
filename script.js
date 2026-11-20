@@ -1,9 +1,8 @@
 /**
  * Sarojini Swaminathan Portfolio
- * 4 Skillset Decks with Nested 3-4 Project Fan-Out, Dimming & Flip Interaction
+ * Editorial Title Hero + Scroll-Triggered Dealing Decks + Scoped Stage Dimmer
  */
 
-// SVG Hand-drawn loop path matching the sketch in reference image
 const handDrawnLoopSVG = `
 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M 48,15 
@@ -18,7 +17,6 @@ const handDrawnLoopSVG = `
 </svg>
 `;
 
-// 4 Decks with 3-4 Distinct Projects Per Deck
 const skillDecks = [
   {
     id: "uiux",
@@ -266,7 +264,6 @@ const skillDecks = [
   }
 ];
 
-// Internships Data
 const internships = [
   {
     company: "DataTracks",
@@ -300,27 +297,22 @@ const internships = [
   }
 ];
 
-// Render 4 Skillset Decks with Nested Cards
 const fanStage = document.getElementById("fanStage");
+const decksRow = document.getElementById("decksRow");
 
 function renderDecks() {
-  fanStage.innerHTML = skillDecks.map((deck) => {
-    // Generate 3-4 individual cards inside the deck
+  decksRow.innerHTML = skillDecks.map((deck) => {
     const cardsHTML = deck.projects.map((proj, pIndex) => `
       <div class="project-fan-card" data-index="${pIndex}" onclick="event.stopPropagation(); openModal('${deck.id}', '${proj.id}')">
         
-        <!-- FRONT FACE: Solid Deck Card with Organic Loop & Category Title -->
         <div class="flip-face card-front-face ${deck.colorClass}">
           <div class="card-rim-text">${deck.rimText}</div>
-          
           <div class="card-handdrawn-circle">
             ${handDrawnLoopSVG}
           </div>
-
           <h2 class="card-deck-title">${deck.title}</h2>
         </div>
 
-        <!-- BACK FACE: Specific Project Brief (revealed on hover flip) -->
         <div class="flip-face card-back-face">
           <div>
             <div class="back-top">
@@ -333,7 +325,6 @@ function renderDecks() {
               ${proj.tags.slice(0, 3).map(t => `<span>${t}</span>`).join("")}
             </div>
           </div>
-
           <div class="back-click-indicator">
             Click card to open &rarr;
           </div>
@@ -351,36 +342,51 @@ function renderDecks() {
     `;
   }).join("");
 
-  attachDimmerListeners();
+  attachScopedDimmerListeners();
+  setupScrollDealObserver();
 }
 
-// Hover event listeners to toggle ambient background dimming
-function attachDimmerListeners() {
+// Scoped Dimmer: Dulls ONLY the .card-fan-stage background, never the whole page
+function attachScopedDimmerListeners() {
   const deckWrappers = document.querySelectorAll(".deck-stack-wrapper");
   deckWrappers.forEach(deck => {
     deck.addEventListener("mouseenter", () => {
-      document.body.classList.add("deck-active");
+      fanStage.classList.add("has-active-deck");
     });
     deck.addEventListener("mouseleave", () => {
-      document.body.classList.remove("deck-active");
+      fanStage.classList.remove("has-active-deck");
     });
   });
 }
 
-// Touch tap toggle for mobile devices
+// Deals the 4 decks outward once the user scrolls into the Work section
+function setupScrollDealObserver() {
+  const deckWrappers = document.querySelectorAll(".deck-stack-wrapper");
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        deckWrappers.forEach(d => d.classList.add("is-dealt"));
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+
+  observer.observe(fanStage);
+}
+
 window.toggleDeckMobile = function(element) {
   const wasOpen = element.classList.contains("is-open");
   document.querySelectorAll(".deck-stack-wrapper").forEach(d => d.classList.remove("is-open"));
   
   if (!wasOpen) {
     element.classList.add("is-open");
-    document.body.classList.add("deck-active");
+    fanStage.classList.add("has-active-deck");
   } else {
-    document.body.classList.remove("deck-active");
+    fanStage.classList.remove("has-active-deck");
   }
 };
 
-// Render Internships Section
+// Render Internships
 const internshipsGrid = document.getElementById("internshipsGrid");
 function renderInternships() {
   internshipsGrid.innerHTML = internships.map(item => `
@@ -398,7 +404,7 @@ function renderInternships() {
   `).join("");
 }
 
-// Project Modal Drawer Logic
+// Modal Logic
 const modalBackdrop = document.getElementById("modalBackdrop");
 const modalClose = document.getElementById("modalClose");
 const modalCategory = document.getElementById("modalCategory");
@@ -433,6 +439,5 @@ modalBackdrop.addEventListener("click", (e) => {
   if (e.target === modalBackdrop) modalBackdrop.classList.remove("open");
 });
 
-// Initialize
 renderDecks();
 renderInternships();

@@ -5,39 +5,151 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sarojini Swaminathan — Product &amp; UX Designer</title>
 
-  <!-- Clean grotesque fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@600;700&family=Caveat:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Backdrop overlay when hovering over any deck -->
-  <div class="deck-spotlight-dimmer" id="spotlightDimmer"></div>
+  <!-- ========================================================= -->
+  <!-- 1. FULL-VIEWPORT EDITORIAL TITLE PAGE                     -->
+  <!-- ========================================================= -->
+  <section class="title-hero" id="top">
 
-  <div class="page-container">
+    <!-- Top-Left & Top-Right Geometric Domino Corner Accents -->
+    <div class="corner-domino corner-left" aria-hidden="true">
+      <div class="domino-fill">
+        <span class="pip pip-1"></span>
+        <span class="pip pip-2"></span>
+      </div>
+      <div class="domino-line line-1"></div>
+      <div class="domino-line line-2"></div>
+      <div class="domino-line line-3"></div>
+    </div>
 
-    <!-- Top Navigation Header -->
-    <header class="top-nav">
-      <div class="nav-brand">SAROJINI S.</div>
-      <nav class="nav-menu">
-        <a href="#work" class="active">Work</a>
-        <a href="#about">About</a>
-        <a href="https://www.instagram.com/sewnbysaro/" target="_blank" rel="noopener">sewnbysaro</a>
-        <a href="mailto:saro24jini@gmail.com">contact</a>
-      </nav>
+    <div class="corner-domino corner-right" aria-hidden="true">
+      <div class="domino-fill">
+        <span class="pip pip-center"></span>
+      </div>
+      <div class="domino-line line-1"></div>
+      <div class="domino-line line-2"></div>
+      <div class="domino-line line-3"></div>
+    </div>
+
+    <!-- Minimal Floating Nav -->
+    <header class="hero-nav">
+      <a href="#work">Work</a>
+      <a href="#internships">Internships</a>
+      <a href="https://www.instagram.com/sewnbysaro/" target="_blank" rel="noopener">sewnbysaro</a>
+      <a href="mailto:saro24jini@gmail.com">Contact</a>
     </header>
 
-    <div class="horizontal-rule"></div>
+    <!-- Center Editorial PORTFOLIO Lockup -->
+    <div class="poster-lockup">
+      <!-- Top Metadata Line -->
+      <div class="poster-meta-row">
+        <span class="meta-text">SAROJINI SWAMINATHAN</span>
+        <span class="meta-rule"><i class="dot"></i><i class="dot"></i></span>
+        <span class="meta-text">2026</span>
+      </div>
 
-    <!-- Hero Titles -->
-    <section class="hero-section" id="about">
-      <p class="hero-kicker">PRODUCT &amp; UX DESIGNER / PORTFOLIO</p>
-      <h1 class="hero-title">Sarojini Swaminathan.</h1>
-      <p class="hero-tagline">Finding the people in design</p>
-    </section>
+      <!-- Main Split Display Grid -->
+      <div class="poster-grid">
+        <!-- Left Word Cluster: P / F + Tall O -->
+        <div class="poster-left">
+          <div class="stacked-letters">
+            <span>P</span>
+            <span>F</span>
+          </div>
+          <div class="tall-o">O</div>
+        </div>
+
+        <!-- Center Waving Character Illustration (Styled in Palette) -->
+        <div class="poster-illustration">
+          <svg viewBox="0 0 260 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Waving Right Arm & Hand -->
+            <path d="M168 158 L206 118 L218 126 L180 176 Z" fill="#FFFFFF" stroke="#3F2314" stroke-width="3" stroke-linejoin="round"/>
+            <!-- Watch / Bracelet -->
+            <rect x="198" y="122" width="14" height="7" rx="2" transform="rotate(-40 198 122)" fill="#83ACBF" stroke="#3F2314" stroke-width="2"/>
+            <!-- Waving Hand & Fingers -->
+            <path d="M208 117 L204 94 C204 91 209 91 210 94 L214 111 L217 88 C218 85 223 86 222 89 L219 111 L226 91 C227 88 232 90 231 93 L224 113 L234 97 C236 94 240 97 238 100 L226 121 C222 127 213 126 208 117 Z" fill="#FFFFFF" stroke="#3F2314" stroke-width="2.6" stroke-linejoin="round"/>
+
+            <!-- Torso / Structured Shirt in Deep Chocolate -->
+            <path d="M98 134 L164 102 L186 154 L164 168 L174 264 L106 264 L96 186 L82 162 Z" fill="#5C321E" stroke="#3F2314" stroke-width="3" stroke-linejoin="round"/>
+            <!-- Subtle Speckle Texture on Shirt -->
+            <circle cx="122" cy="165" r="1.4" fill="#FAF2E8" opacity="0.7"/>
+            <circle cx="145" cy="148" r="1.2" fill="#FAF2E8" opacity="0.7"/>
+            <circle cx="136" cy="195" r="1.5" fill="#FAF2E8" opacity="0.7"/>
+            <circle cx="154" cy="218" r="1.2" fill="#FAF2E8" opacity="0.7"/>
+            <circle cx="118" cy="228" r="1.4" fill="#FAF2E8" opacity="0.7"/>
+
+            <!-- Folded Left Arm -->
+            <path d="M84 162 L76 204 L124 222 L128 208 L95 194 L102 168" fill="#FFFFFF" stroke="#3F2314" stroke-width="3" stroke-linejoin="round"/>
+
+            <!-- Crisp Shirt Collar -->
+            <path d="M106 126 L124 144 L132 128 L146 136 L144 114 Z" fill="#FFFFFF" stroke="#3F2314" stroke-width="2.6" stroke-linejoin="round"/>
+
+            <!-- Neck -->
+            <path d="M108 112 L114 130 L136 120 L130 102 Z" fill="#FFFFFF" stroke="#3F2314" stroke-width="2.6"/>
+
+            <!-- Head & Hair (Tilted playfully) -->
+            <g transform="rotate(-24 110 86)">
+              <!-- Hair Silhouette -->
+              <path d="M76 74 C72 52 84 36 112 36 C134 36 144 48 140 66 L134 62 L130 52 L92 54 L86 78 Z" fill="#3F2314"/>
+              <!-- Face Outline -->
+              <path d="M84 56 L132 54 L134 94 C134 108 118 116 104 114 C90 112 82 100 84 84 Z" fill="#FFFFFF" stroke="#3F2314" stroke-width="3" stroke-linejoin="round"/>
+              <!-- Expressive Brows -->
+              <path d="M90 66 L104 69" stroke="#3F2314" stroke-width="3.2" stroke-linecap="round"/>
+              <path d="M114 68 L128 63" stroke="#3F2314" stroke-width="3.2" stroke-linecap="round"/>
+              <!-- Eyes -->
+              <circle cx="97" cy="76" r="2.2" fill="#3F2314"/>
+              <circle cx="120" cy="75" r="2.2" fill="#3F2314"/>
+              <!-- Stylized Geometric Glasses -->
+              <rect x="85" y="69" width="21" height="16" rx="3" fill="#83ACBF" fill-opacity="0.22" stroke="#3F2314" stroke-width="2.4"/>
+              <rect x="111" y="68" width="21" height="16" rx="3" fill="#83ACBF" fill-opacity="0.22" stroke="#3F2314" stroke-width="2.4"/>
+              <line x1="106" y1="76" x2="111" y2="76" stroke="#3F2314" stroke-width="2.4"/>
+              <!-- Nose & Slight Smile -->
+              <path d="M108 77 L105 90 L111 91" stroke="#3F2314" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M102 100 Q110 103 117 98" stroke="#3F2314" stroke-width="2.2" stroke-linecap="round"/>
+            </g>
+
+            <!-- Trousers Base -->
+            <path d="M108 264 L106 338 L138 338 L142 292 L148 338 L176 338 L172 264 Z" fill="#3F2314"/>
+            <line x1="142" y1="264" x2="142" y2="295" stroke="#FFFFFF" stroke-width="2"/>
+          </svg>
+        </div>
+
+        <!-- Right Word Cluster: RT / LIO -->
+        <div class="poster-right">
+          <div class="right-row">RT</div>
+          <div class="right-row">LIO</div>
+        </div>
+      </div>
+
+      <!-- Bottom Metadata Line -->
+      <div class="poster-meta-row">
+        <span class="meta-text">PRODUCT &amp; UX DESIGNER</span>
+        <span class="meta-rule"><i class="dot"></i><i class="dot"></i></span>
+        <span class="meta-text">MULTIDISCIPLINARY</span>
+      </div>
+    </div>
+
+    <!-- Bottom Hand-Drawn Stamp & Scroll Cue -->
+    <div class="poster-footer-stamp">
+      <div class="stamp-badge">
+        <span>SARO</span>
+        <span>JINI</span>
+      </div>
+      <a href="#work" class="scroll-cue">Scroll to deal decks &darr;</a>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- 2. AFTER-SCROLL SECTION: DEALING CARDS & INTERNSHIPS      -->
+  <!-- ========================================================= -->
+  <div class="page-container">
 
     <div class="horizontal-rule"></div>
 
@@ -45,16 +157,20 @@
     <section class="deck-meta-bar" id="work">
       <div class="meta-col">
         <span class="meta-label">PICK A DECK</span>
-        <p class="meta-desc">A few different ways I make things. Hover or tap a deck to fan out project cards and flip to their briefs.</p>
+        <p class="meta-desc">Finding the people in design. Hover or tap a deck to fan out project cards and flip to their briefs.</p>
       </div>
       <div class="meta-col meta-right">
         <span class="meta-status">04 SKILLSETS / WORK IN PROGRESS</span>
       </div>
     </section>
 
-    <!-- Fanned Out 4 Decks Interactive Stage -->
+    <!-- Fanned Out 4 Decks Interactive Stage (Scoped Dimmer Inside Here) -->
     <main class="card-fan-stage" id="fanStage">
-      <!-- Dynamic decks injected via script.js -->
+      <!-- Scoped Backdrop Dimmer: ONLY dulls the stage area behind the active deck -->
+      <div class="stage-local-dimmer" id="stageDimmer"></div>
+
+      <!-- 4 Skillset Decks injected here via script.js -->
+      <div class="decks-row" id="decksRow"></div>
     </main>
 
     <!-- Dedicated Internships Section -->
