@@ -32,11 +32,11 @@ body {
 }
 
 /* ========================================================= */
-/* 1. STICKY SCROLL SEQUENCE (MacBook Air 2 -> 7 -> 8 -> 9 -> 10) */
+/* 1. STICKY SCROLL SEQUENCE                                 */
 /* ========================================================= */
 .scroll-sequence-track {
   position: relative;
-  height: 290vh; /* Drives the 5-frame hand flick sequence on scroll */
+  height: 290vh;
   width: 100%;
 }
 
@@ -77,7 +77,7 @@ body {
   opacity: 1;
 }
 
-/* Minimal Top Navigation matching MacBook Air Screens */
+/* Minimal Top Navigation */
 .top-nav {
   position: relative;
   z-index: 30;
@@ -169,33 +169,39 @@ body {
 }
 
 /* ========================================================= */
-/* ANIMATED HAND + CARD ACTOR (Scrubbed by Scroll)           */
+/* ANIMATED HAND PNG ACTOR (image_d83126.png)                */
 /* ========================================================= */
 .hand-actor {
   position: absolute;
-  top: 14vh;
-  right: clamp(24px, 9vw, 130px);
-  width: clamp(230px, 26vw, 320px);
+  top: 10vh;
+  right: clamp(20px, 8vw, 110px);
+  width: clamp(260px, 30vw, 390px);
   z-index: 35;
   pointer-events: none;
   transform-origin: bottom right;
   will-change: transform;
 }
 
-.hand-actor svg {
+.hand-png-img {
   width: 100%;
   height: auto;
-  overflow: visible;
+  display: block;
+  /* Blends the white background of the PNG cleanly onto the warm stage */
+  mix-blend-mode: multiply;
+  /* Shifts the card hue in the hand to match Tangelo #CF4E1D */
+  filter: hue-rotate(-16deg) saturate(1.25) contrast(1.04);
+  transition: transform 0.25s ease;
 }
 
 .flick-lines {
+  position: absolute;
+  top: 18%;
+  left: 12%;
+  width: 110px;
+  height: 110px;
   opacity: 0;
   transition: opacity 0.2s ease;
-}
-
-.held-card {
-  transform-origin: 102px 100px;
-  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s ease;
+  z-index: 2;
 }
 
 /* ========================================================= */
@@ -229,18 +235,16 @@ body {
 .deck-stack-wrapper {
   position: relative;
   width: 235px;
-  height: 330px;
+  height: 335px;
   margin: 0 -18px;
   transform-style: preserve-3d;
   cursor: pointer;
   z-index: 30;
-  /* Starts gathered at the hand's flick point before arranging into categories */
   opacity: 0;
   transform: translate3d(180px, -40px, -80px) rotate(12deg) scale(0.32);
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
 }
 
-/* Arranged Category Fan Positions (Frame 2 / MacBook Air - 10) */
 .arranged-decks-stage.is-revealed .deck-stack-wrapper.deck-uiux {
   opacity: 1;
   transform: rotate(-18deg) translateY(36px);
@@ -265,7 +269,6 @@ body {
   transition-delay: 0.28s;
 }
 
-/* Hovering an arranged deck lifts it above the dimmer and fans its cards */
 .arranged-decks-stage.is-revealed .deck-stack-wrapper.is-open,
 .arranged-decks-stage.is-revealed .deck-stack-wrapper:hover {
   z-index: 100 !important;
@@ -288,7 +291,7 @@ body {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  border-radius: 22px;
+  border-radius: 18px;
   cursor: pointer;
   transform-origin: bottom center;
   transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s;
@@ -347,84 +350,140 @@ body {
 .flip-face {
   position: absolute;
   inset: 0;
-  border-radius: 22px;
+  border-radius: 18px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  box-shadow: 0 14px 32px rgba(63, 35, 20, 0.22);
-  border: 1.5px solid rgba(63, 35, 20, 0.45);
+  box-shadow: 0 14px 32px rgba(63, 35, 20, 0.24);
   overflow: hidden;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
-.card-rim-text {
-  font-size: 0.64rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.85;
-}
-
-.card-handdrawn-circle {
-  width: 92px;
-  height: 92px;
-  margin: 12px auto 0;
+/* ========================================================= */
+/* CARD BACK DESIGN: image_d834e5.jpg RECOLORED TO PALETTE   */
+/* + MIDDLE PANEL CATEGORY LABEL                             */
+/* ========================================================= */
+.vintage-card-back {
+  background-color: #FFFFFF;
+  border: 1.5px solid rgba(92, 50, 30, 0.35);
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.card-handdrawn-circle svg {
+.vintage-card-art {
+  position: relative;
   width: 100%;
   height: 100%;
-  overflow: visible;
+  border-radius: 11px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.card-deck-title {
-  font-size: 1.42rem;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin-top: auto;
+/* Base artwork from image_d834e5.jpg cropped cleanly inside its white border */
+.vintage-card-art::before {
+  content: "";
+  position: absolute;
+  inset: -4%;
+  background-image: url("image_d834e5.jpg");
+  background-size: 108% 108%;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Converts the original terracotta/white card art to high-contrast grayscale so palette tints apply cleanly */
+  filter: grayscale(100%) contrast(1.45) brightness(1.06);
+  z-index: 1;
 }
 
-/* Deck Palette */
-.color-tangelo {
+/* Color-blend overlay matching the exact website palette */
+.vintage-card-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: multiply;
+  z-index: 2;
+}
+
+/* 1. UI/UX Deck -> Tangelo (#CF4E1D) */
+.color-tangelo .vintage-card-art {
   background-color: var(--color-tangelo);
-  color: #FFFFFF;
 }
-.color-tangelo .card-rim-text { color: rgba(255, 255, 255, 0.9); }
-.color-tangelo .card-handdrawn-circle path { stroke: #1F1008; }
+.color-tangelo .vintage-card-art::after {
+  background-color: var(--color-tangelo);
+}
 
-.color-botticelli {
+/* 2. Graphic Design Deck -> Botticelli Blue (#83ACBF) */
+.color-botticelli .vintage-card-art {
+  background-color: var(--color-botticelli);
+}
+.color-botticelli .vintage-card-art::after {
+  background-color: var(--color-botticelli);
+}
+
+/* 3. Sewing Projects Deck -> Chocolate Brown (#5C321E) */
+.color-chocolate .vintage-card-art {
+  background-color: var(--color-chocolate);
+}
+.color-chocolate .vintage-card-art::after {
+  background-color: var(--color-chocolate);
+}
+
+/* 4. Others Deck -> Tangelo & Chocolate Dual Tone */
+.color-others .vintage-card-art {
+  background-color: #B84217;
+}
+.color-others .vintage-card-art::after {
+  background-color: var(--color-tangelo);
+}
+
+/* Middle Panel Label Overlay (Replaces the center horizontal bar with the Group of Work) */
+.card-middle-panel-label {
+  position: relative;
+  z-index: 5;
+  width: 86%;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1.5px solid #FFFFFF;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+}
+
+.color-tangelo .card-middle-panel-label {
+  background-color: var(--color-tangelo);
+}
+
+.color-botticelli .card-middle-panel-label {
   background-color: var(--color-botticelli);
   color: var(--color-chocolate);
+  border-color: var(--color-chocolate);
 }
-.color-botticelli .card-rim-text { color: rgba(92, 50, 30, 0.85); }
-.color-botticelli .card-handdrawn-circle path { stroke: var(--color-chocolate); }
 
-.color-chocolate {
+.color-chocolate .card-middle-panel-label {
   background-color: var(--color-chocolate);
-  color: #FFFFFF;
 }
-.color-chocolate .card-rim-text { color: rgba(255, 255, 255, 0.9); }
-.color-chocolate .card-handdrawn-circle path { stroke: #180B05; }
 
-.color-others {
-  background-color: var(--color-tangelo);
-  color: #FFFFFF;
+.color-others .card-middle-panel-label {
+  background-color: var(--color-chocolate);
+  border-color: #FFFFFF;
 }
-.color-others .card-rim-text { color: rgba(255, 255, 255, 0.9); }
-.color-others .card-handdrawn-circle path { stroke: #1F1008; }
 
-/* Flipped Card Back (Project Brief) */
+/* ========================================================= */
+/* FLIPPED CARD FRONT (Project Details)                      */
+/* ========================================================= */
 .card-back-face {
   background-color: var(--color-surface);
   color: var(--color-text-dark);
   transform: rotateY(180deg);
   border: 2px solid var(--color-chocolate);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .back-top {
@@ -747,11 +806,15 @@ body {
   }
   .deck-stack-wrapper {
     width: 175px;
-    height: 250px;
+    height: 255px;
     margin: 0 -14px;
   }
   .hand-actor {
-    width: 210px;
-    right: 16px;
+    width: 230px;
+    right: 12px;
+  }
+  .card-middle-panel-label {
+    font-size: 0.6rem;
+    padding: 5px 6px;
   }
 }

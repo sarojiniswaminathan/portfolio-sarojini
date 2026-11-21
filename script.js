@@ -1,28 +1,12 @@
 /**
  * Sarojini Swaminathan Portfolio
- * Scroll-Scrubbed Hand Flick Sequence -> Arranges Cards into 4 Category Decks
+ * Scroll-Scrubbed Hand PNG Flick Sequence + Vintage Card Back (image_d834e5.jpg) with Middle Panel Group Labels
  */
 
-const handDrawnLoopSVG = `
-<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M 48,15 
-           C 74,14 88,32 86,54 
-           C 84,76 68,88 46,86 
-           C 25,84 14,68 15,48 
-           C 16,28 32,15 52,16 
-           C 66,17 78,28 78,40" 
-        stroke-width="2.5" 
-        stroke-linecap="round" 
-        stroke-linejoin="round"/>
-</svg>
-`;
-
-// Existing 4 Decks & All Project Information Preserved
 const skillDecks = [
   {
     id: "uiux",
     title: "UI/UX",
-    rimText: "SAROJINI / SELECTED WORK",
     colorClass: "color-tangelo",
     deckClass: "deck-uiux",
     projects: [
@@ -79,7 +63,6 @@ const skillDecks = [
   {
     id: "graphic",
     title: "Graphic Design",
-    rimText: "SAROJINI / SELECTED WORK",
     colorClass: "color-botticelli",
     deckClass: "deck-graphic",
     projects: [
@@ -135,8 +118,7 @@ const skillDecks = [
   },
   {
     id: "sewing",
-    title: "Sewing Projects",
-    rimText: "SAROJINI / SELECTED WORK",
+    title: "Sewing",
     colorClass: "color-chocolate",
     deckClass: "deck-sewing",
     projects: [
@@ -193,7 +175,6 @@ const skillDecks = [
   {
     id: "others",
     title: "Others",
-    rimText: "SAROJINI / SELECTED WORK",
     colorClass: "color-others",
     deckClass: "deck-others",
     projects: [
@@ -302,26 +283,26 @@ const internships = [
 const scrollTrack = document.getElementById("scrollTrack");
 const stickyViewport = document.getElementById("stickyViewport");
 const handActor = document.getElementById("handActor");
-const heldCard = document.getElementById("heldCard");
+const handPngImg = document.getElementById("handPngImg");
 const flickLines = document.getElementById("flickLines");
 const arrangedStage = document.getElementById("arrangedStage");
 const decksRow = document.getElementById("decksRow");
 const scrollHint = document.getElementById("scrollHint");
 
-// Render the 4 Skillset Decks
+// Render the 4 Skillset Decks with image_d834e5.jpg Card Back + Middle Panel Label
 function renderDecks() {
   decksRow.innerHTML = skillDecks.map((deck) => {
     const cardsHTML = deck.projects.map((proj, pIndex) => `
       <div class="project-fan-card" data-index="${pIndex}" onclick="event.stopPropagation(); openModal('${deck.id}', '${proj.id}')">
         
-        <div class="flip-face card-front-face ${deck.colorClass}">
-          <div class="card-rim-text">${deck.rimText}</div>
-          <div class="card-handdrawn-circle">
-            ${handDrawnLoopSVG}
+        <!-- CARD BACK: Vintage Artwork (image_d834e5.jpg) tinted to site colors + Middle Panel Group Label -->
+        <div class="flip-face vintage-card-back ${deck.colorClass}">
+          <div class="vintage-card-art">
+            <div class="card-middle-panel-label">${deck.title}</div>
           </div>
-          <h2 class="card-deck-title">${deck.title}</h2>
         </div>
 
+        <!-- CARD FRONT (Flipped on hover): Specific Project Brief -->
         <div class="flip-face card-back-face">
           <div>
             <div class="back-top">
@@ -354,7 +335,6 @@ function renderDecks() {
   attachScopedDimmerListeners();
 }
 
-// Scoped Stage Dimmer (Dulls only the stage area behind the hovered deck)
 function attachScopedDimmerListeners() {
   const deckWrappers = document.querySelectorAll(".deck-stack-wrapper");
   deckWrappers.forEach(deck => {
@@ -382,26 +362,16 @@ window.toggleDeckMobile = function(element) {
   }
 };
 
-// =========================================================
-// SCROLL-DRIVEN HAND FLICK SEQUENCE (Frames 2 -> 7 -> 8 -> 9 -> 10)
-// =========================================================
+// Scroll-Scrubbed Hand PNG Flick Sequence
 function updateScrollSequence() {
   const rect = scrollTrack.getBoundingClientRect();
   const scrollableDistance = rect.height - window.innerHeight;
   if (scrollableDistance <= 0) return;
 
-  // Normalized scroll progress [0..1] across the sticky track
   const progress = Math.min(1, Math.max(0, -rect.top / scrollableDistance));
 
-  // Fade out scroll prompt once user starts scrolling
   scrollHint.style.opacity = progress > 0.08 ? "0" : "0.65";
 
-  // 1. Hand & Wrist Motion across the 5 storyboard frames:
-  // Frame 2 (0.0): Upright at top-right (0px, 0px, 0deg)
-  // Frame 7 (0.25): Tilts forward (-18deg)
-  // Frame 8 (0.50): Sweeps lower and tilts (-34deg)
-  // Frame 9 (0.72): Drops toward lower-right table area (+34vh, -26deg)
-  // Frame 10 (0.85+): Settles at bottom-right corner after flicking cards
   const translateY = Math.min(progress / 0.78, 1) * (window.innerHeight * 0.42);
   const translateX = Math.sin(Math.min(progress / 0.85, 1) * Math.PI) * -32;
   const rotateDeg = progress < 0.55
@@ -410,19 +380,13 @@ function updateScrollSequence() {
 
   handActor.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) rotate(${rotateDeg}deg)`;
 
-  // 2. Card Release & Flick Trigger at 72% Scroll
   if (progress >= 0.72) {
-    // Flick motion lines appear around the hand
     flickLines.style.opacity = "1";
-    // Held card shoots out of the fingers onto the table
-    heldCard.style.transform = "translate(-95px, 45px) rotate(-38deg) scale(0.85)";
-    heldCard.style.opacity = "0";
-    // 4 category decks fan out into their arc positions
+    handPngImg.style.transform = "rotate(-10deg) scale(0.96)";
     arrangedStage.classList.add("is-revealed");
   } else {
     flickLines.style.opacity = "0";
-    heldCard.style.transform = "translate(0, 0) rotate(0deg) scale(1)";
-    heldCard.style.opacity = "1";
+    handPngImg.style.transform = "rotate(0deg) scale(1)";
     arrangedStage.classList.remove("is-revealed");
     stickyViewport.classList.remove("has-active-deck");
   }
@@ -487,7 +451,6 @@ modalBackdrop.addEventListener("click", (e) => {
   if (e.target === modalBackdrop) modalBackdrop.classList.remove("open");
 });
 
-// Initialize
 renderDecks();
 renderInternships();
 updateScrollSequence();

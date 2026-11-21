@@ -33,65 +33,27 @@
         </nav>
       </header>
 
-      <!-- Left Title Lockup: "i'm saro." matching MacBook Air Frames -->
+      <!-- Left Title Lockup: "i'm saro." -->
       <div class="saro-title-lockup" id="titleLockup">
         <span class="im-word">i’m</span>
         <svg class="saro-wordmark" viewBox="0 0 430 145" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="saro.">
-          <!-- Double-line / inline cursive lettering matching the storyboard -->
           <text x="6" y="108" class="saro-stroke-outer">saro.</text>
           <text x="6" y="108" class="saro-stroke-inner">saro.</text>
         </svg>
         <p class="scroll-hint" id="scrollHint">Scroll to flick the deck &darr;</p>
       </div>
 
-      <!-- Animated Hand + Card Actor (Scrubbed by Scroll) -->
+      <!-- Animated Hand Actor using image_d83126.png (Scrubbed by Scroll) -->
       <div class="hand-actor" id="handActor" aria-hidden="true">
-        <svg viewBox="0 0 320 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Flick Motion Lines (Appear at the flick stage) -->
-          <g class="flick-lines" id="flickLines">
-            <path d="M52 132 C42 146 42 166 52 180" stroke="#3F2314" stroke-width="2" stroke-linecap="round"/>
-            <path d="M40 142 C33 152 33 164 40 174" stroke="#3F2314" stroke-width="1.6" stroke-linecap="round"/>
-            <path d="M135 232 C152 238 172 236 186 226" stroke="#3F2314" stroke-width="2" stroke-linecap="round"/>
-            <path d="M144 242 C158 246 172 244 182 237" stroke="#3F2314" stroke-width="1.6" stroke-linecap="round"/>
-          </g>
-
-          <!-- The Dealt Tangelo Card held & flicked by the hand -->
-          <g class="held-card" id="heldCard">
-            <rect x="64" y="42" width="76" height="114" rx="12" fill="#CF4E1D" stroke="#3F2314" stroke-width="2.2"/>
-            <rect x="70" y="48" width="64" height="102" rx="8" stroke="#FAF2E8" stroke-width="1" stroke-opacity="0.55"/>
-          </g>
-
-          <!-- Fine-Line Illustrated Hand & Forearm -->
-          <g class="hand-linework" id="handLinework">
-            <!-- Forearm & Wrist -->
-            <path d="M292 315 C265 278 242 244 226 210 C220 197 216 184 212 170" fill="#F4E8D6"/>
-            <path d="M292 315 C265 278 242 244 226 210 C220 197 216 184 212 170" stroke="#2D1D2B" stroke-width="2.2" stroke-linecap="round"/>
-            <path d="M242 332 C214 294 188 260 166 226 C158 214 148 202 138 190" fill="#F4E8D6"/>
-            <path d="M242 332 C214 294 188 260 166 226 C158 214 148 202 138 190" stroke="#2D1D2B" stroke-width="2.2" stroke-linecap="round"/>
-
-            <!-- Palm & Back of Hand -->
-            <path d="M212 170 C206 144 198 122 184 102 C175 89 162 82 152 86 C145 89 146 99 154 109 L174 136" fill="#F4E8D6" stroke="#2D1D2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-
-            <!-- Index Finger (Pinching / Flicking) -->
-            <path d="M168 112 C154 96 140 84 128 84 C121 84 119 91 125 98 C134 108 148 122 162 136" fill="#F4E8D6" stroke="#2D1D2B" stroke-width="2.2" stroke-linecap="round"/>
-
-            <!-- Middle Finger -->
-            <path d="M160 130 C145 120 132 116 125 121 C119 125 122 133 131 139 C142 146 154 152 165 158" fill="#F4E8D6" stroke="#2D1D2B" stroke-width="2.2" stroke-linecap="round"/>
-
-            <!-- Ring Finger -->
-            <path d="M158 148 C144 143 133 142 128 148 C124 153 128 160 137 164 C147 169 157 173 166 177" fill="#F4E8D6" stroke="#2D1D2B" stroke-width="2.2" stroke-linecap="round"/>
-
-            <!-- Pinky Finger -->
-            <path d="M158 167 C146 164 137 166 134 172 C131 177 136 183 144 186 C152 189 160 192 168 194" fill="#F4E8D6" stroke="#2D1D2B" stroke-width="2.2" stroke-linecap="round"/>
-
-            <!-- Thumb (Resting across front of card / flicking) -->
-            <path d="M138 190 C124 174 110 156 104 138 C100 127 107 120 116 126 C126 133 136 147 148 162" fill="#F4E8D6" stroke="#2D1D2B" stroke-width="2.3" stroke-linecap="round"/>
-
-            <!-- Subtle Knuckle & Palm Contour Lines -->
-            <path d="M174 142 C180 152 184 164 185 176" stroke="#2D1D2B" stroke-width="1.4" stroke-linecap="round"/>
-            <path d="M192 168 C196 178 198 188 198 198" stroke="#2D1D2B" stroke-width="1.4" stroke-linecap="round"/>
-          </g>
+        <!-- Flick Motion Lines (Appear at the flick stage) -->
+        <svg class="flick-lines" id="flickLines" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M36 22 C24 38 24 62 36 78" stroke="#5C321E" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M22 32 C14 44 14 58 22 70" stroke="#CF4E1D" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M62 96 C80 104 100 102 114 90" stroke="#5C321E" stroke-width="2.4" stroke-linecap="round"/>
         </svg>
+
+        <!-- Your Hand PNG (Blended cleanly onto the linen backdrop & color-matched to Tangelo) -->
+        <img src="image_d83126.png" alt="" class="hand-png-img" id="handPngImg" />
       </div>
 
       <!-- Anchor target for "Work" nav link -->
@@ -100,7 +62,7 @@
       <!-- 4 Category Decks: Arrange into curved fan after hand flicks -->
       <div class="arranged-decks-stage" id="arrangedStage">
         <div class="decks-arc-row" id="decksRow">
-          <!-- Injected dynamically via script.js with all existing project data -->
+          <!-- Injected dynamically via script.js -->
         </div>
       </div>
 
