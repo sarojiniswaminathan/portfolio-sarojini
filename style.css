@@ -1,15 +1,15 @@
 :root {
-  --color-bg: #FFFFFF;
-  --color-surface: #FAFAFA;
+  --color-linen: #F4E8D6;
+  --color-linen-center: #FAF3E8;
+  --color-surface: #FFFFFF;
   --color-tangelo: #CF4E1D;
   --color-chocolate: #5C321E;
   --color-botticelli: #83ACBF;
   --color-text-dark: #3F2314;
-  --color-line: rgba(92, 50, 30, 0.22);
+  --color-line: rgba(92, 50, 30, 0.25);
 
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-poster: 'Antonio', sans-serif;
-  --font-stamp: 'Caveat', cursive;
+  --font-script: 'Pacifico', cursive;
 }
 
 * {
@@ -24,428 +24,253 @@ html {
 }
 
 body {
-  background-color: var(--color-bg);
+  background-color: var(--color-linen);
   color: var(--color-text-dark);
   font-family: var(--font-sans);
   min-height: 100vh;
   overflow-x: hidden;
-  position: relative;
 }
 
 /* ========================================================= */
-/* 1. EDITORIAL TITLE HERO PAGE                              */
+/* 1. STICKY SCROLL SEQUENCE (MacBook Air 2 -> 7 -> 8 -> 9 -> 10) */
 /* ========================================================= */
-.title-hero {
+.scroll-sequence-track {
   position: relative;
-  min-height: 100vh;
+  height: 290vh; /* Drives the 5-frame hand flick sequence on scroll */
   width: 100%;
-  background-color: var(--color-bg);
+}
+
+.sticky-viewport {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 52%, var(--color-linen-center) 0%, var(--color-linen) 72%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  padding: 28px 40px 36px;
-  overflow: hidden;
+  padding: 28px 48px 36px;
 }
 
-/* Top-Left & Top-Right Domino Corner Motifs */
-.corner-domino {
+.scroll-anchor {
   position: absolute;
-  top: 0;
-  width: 112px;
-  height: 128px;
+  top: 210vh;
+  left: 0;
+  width: 1px;
+  height: 1px;
   pointer-events: none;
 }
 
-.corner-left {
-  left: 0;
-}
-
-.corner-right {
-  right: 0;
-}
-
-.domino-fill {
+/* Scoped Stage Dimmer (Only dims behind hovered deck, no full-page blur) */
+.stage-local-dimmer {
   position: absolute;
-  top: 0;
-  width: 86px;
-  height: 98px;
-  background-color: var(--color-tangelo);
+  inset: 0;
+  background-color: rgba(63, 35, 20, 0.28);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 45;
+  transition: opacity 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.corner-left .domino-fill {
-  left: 0;
+.sticky-viewport.has-active-deck .stage-local-dimmer {
+  opacity: 1;
 }
 
-.corner-right .domino-fill {
-  right: 0;
-}
-
-.pip {
-  position: absolute;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background-color: #FFFFFF;
-}
-
-.pip-1 {
-  top: 38px;
-  left: 32px;
-}
-
-.pip-2 {
-  top: 66px;
-  left: 56px;
-}
-
-.pip-center {
-  top: 46px;
-  left: 38px;
-}
-
-/* Concentric thin architectural lines around corner blocks */
-.domino-line {
-  position: absolute;
-  top: 0;
-  border-bottom: 1px solid rgba(207, 78, 29, 0.45);
-}
-
-.corner-left .domino-line {
-  left: 0;
-  border-right: 1px solid rgba(207, 78, 29, 0.45);
-}
-
-.corner-right .domino-line {
-  right: 0;
-  border-left: 1px solid rgba(207, 78, 29, 0.45);
-}
-
-.line-1 { width: 94px; height: 106px; }
-.line-2 { width: 102px; height: 114px; }
-.line-3 { width: 110px; height: 122px; }
-
-/* Minimal Top Nav on Title Page */
-.hero-nav {
+/* Minimal Top Navigation matching MacBook Air Screens */
+.top-nav {
   position: relative;
-  z-index: 10;
+  z-index: 30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.84rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.nav-brand {
+  text-transform: uppercase;
+  color: var(--color-text-dark);
+}
+
+.nav-menu {
   display: flex;
   gap: 28px;
-  font-size: 0.84rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 
-.hero-nav a {
+.nav-menu a {
   text-decoration: none;
   color: var(--color-text-dark);
   transition: color 0.2s;
 }
 
-.hero-nav a:hover {
+.nav-menu a:hover {
   color: var(--color-tangelo);
 }
 
-/* Center PORTFOLIO Lockup */
-.poster-lockup {
-  width: 100%;
-  max-width: 860px;
-  margin: auto 0;
+/* Left Title Lockup: "i'm saro." */
+.saro-title-lockup {
+  position: absolute;
+  top: 13vh;
+  left: clamp(32px, 6vw, 88px);
+  z-index: 20;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  z-index: 5;
+  align-items: flex-start;
+  pointer-events: none;
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-.poster-meta-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  color: var(--color-tangelo);
+.im-word {
+  font-size: clamp(2.2rem, 4.2vw, 3.6rem);
   font-weight: 700;
-  font-size: 0.92rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.meta-rule {
-  flex: 1;
-  height: 1.5px;
-  background-color: rgba(207, 78, 29, 0.45);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.meta-rule .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--color-tangelo);
-  display: block;
-}
-
-/* Split Condensed PORTFOLIO Letters + Illustration */
-.poster-grid {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 12px;
-  padding: 6px 0;
-}
-
-.poster-left {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-  color: var(--color-tangelo);
-  font-family: var(--font-poster);
-  font-weight: 700;
-  line-height: 0.86;
-}
-
-.stacked-letters {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: clamp(4.8rem, 11vw, 8.8rem);
-  gap: 6px;
-}
-
-.tall-o {
-  font-size: clamp(10.5rem, 23vw, 18.5rem);
-  line-height: 0.8;
+  color: var(--color-botticelli);
+  line-height: 1;
+  margin-left: 10px;
+  margin-bottom: -14px;
   letter-spacing: -0.02em;
 }
 
-.poster-illustration {
-  width: clamp(170px, 24vw, 245px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 -8px;
-  z-index: 4;
+.saro-wordmark {
+  width: clamp(240px, 34vw, 410px);
+  height: auto;
+  overflow: visible;
 }
 
-.poster-illustration svg {
+.saro-stroke-outer {
+  font-family: var(--font-script);
+  font-size: 118px;
+  fill: none;
+  stroke: var(--color-tangelo);
+  stroke-width: 7px;
+  stroke-linejoin: round;
+}
+
+.saro-stroke-inner {
+  font-family: var(--font-script);
+  font-size: 118px;
+  fill: var(--color-linen);
+  stroke: var(--color-tangelo);
+  stroke-width: 1.8px;
+  stroke-linejoin: round;
+}
+
+.scroll-hint {
+  margin-top: 12px;
+  margin-left: 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-chocolate);
+  opacity: 0.65;
+  transition: opacity 0.3s ease;
+}
+
+/* ========================================================= */
+/* ANIMATED HAND + CARD ACTOR (Scrubbed by Scroll)           */
+/* ========================================================= */
+.hand-actor {
+  position: absolute;
+  top: 14vh;
+  right: clamp(24px, 9vw, 130px);
+  width: clamp(230px, 26vw, 320px);
+  z-index: 35;
+  pointer-events: none;
+  transform-origin: bottom right;
+  will-change: transform;
+}
+
+.hand-actor svg {
   width: 100%;
   height: auto;
   overflow: visible;
 }
 
-.poster-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  color: var(--color-tangelo);
-  font-family: var(--font-poster);
-  font-weight: 700;
-  font-size: clamp(4.8rem, 11vw, 8.8rem);
-  line-height: 0.88;
-  gap: 6px;
-}
-
-/* Bottom Hand-Drawn Stamp & Scroll Trigger */
-.poster-footer-stamp {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-}
-
-.stamp-badge {
-  border: 2.5px solid var(--color-tangelo);
-  border-radius: 14px 18px 15px 16px;
-  padding: 4px 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 0.82;
-  font-family: var(--font-stamp);
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--color-tangelo);
-  transform: rotate(-3deg);
-  position: relative;
-}
-
-.stamp-badge::after {
-  content: "";
-  position: absolute;
-  top: -8px;
-  right: -10px;
-  width: 8px;
-  height: 8px;
-  border-top: 2px solid var(--color-tangelo);
-  border-right: 2px solid var(--color-tangelo);
-  transform: rotate(15deg);
-}
-
-.scroll-cue {
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--color-chocolate);
-  opacity: 0.7;
-  transition: opacity 0.2s, transform 0.2s;
-}
-
-.scroll-cue:hover {
-  opacity: 1;
-  color: var(--color-tangelo);
-  transform: translateY(2px);
-}
-
-/* ========================================================= */
-/* 2. AFTER-SCROLL: DEALING CARDS & INTERNSHIPS              */
-/* ========================================================= */
-.page-container {
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 24px 36px 80px;
-  position: relative;
-}
-
-.horizontal-rule {
-  width: 100%;
-  height: 1px;
-  background-color: var(--color-line);
-  margin: 14px 0 26px;
-}
-
-.deck-meta-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  font-size: 0.85rem;
-  margin-bottom: 24px;
-}
-
-.meta-label, .meta-status {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.meta-desc {
-  max-width: 580px;
-  line-height: 1.45;
-  font-size: 0.98rem;
-  opacity: 0.95;
-}
-
-.meta-right {
-  text-align: right;
-}
-
-/* --------------------------------------------------------- */
-/* CARD FANOUT STAGE + SCOPED LOCAL DIMMER (NO FULL-PAGE BLUR)*/
-/* --------------------------------------------------------- */
-.card-fan-stage {
-  position: relative;
-  padding: 70px 24px 120px;
-  min-height: 640px;
-  border-radius: 32px;
-  perspective: 1400px;
-  overflow: visible;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-/* 
-  SCOPED DIMMER: 
-  Lives strictly inside .card-fan-stage (not fixed full-page).
-  Uses a clean warm tint without blurring the entire page.
-*/
-.stage-local-dimmer {
-  position: absolute;
-  inset: 0;
-  border-radius: 32px;
-  background-color: rgba(63, 35, 20, 0.22);
+.flick-lines {
   opacity: 0;
-  pointer-events: none;
-  z-index: 10;
-  transition: opacity 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: opacity 0.2s ease;
 }
 
-.card-fan-stage.has-active-deck .stage-local-dimmer {
-  opacity: 1;
+.held-card {
+  transform-origin: 102px 100px;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s ease;
 }
 
-/* Row holding the 4 decks */
-.decks-row {
+/* ========================================================= */
+/* ARRANGED 4 CATEGORY DECKS (Triggered after Hand Flicks)   */
+/* ========================================================= */
+.arranged-decks-stage {
+  position: absolute;
+  bottom: 4vh;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  width: 100%;
+  align-items: flex-end;
+  perspective: 1400px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.arranged-decks-stage.is-revealed {
+  pointer-events: auto;
+}
+
+.decks-arc-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   transform-style: preserve-3d;
 }
 
-/* Individual Deck Wrapper */
+/* Deck Stack Wrapper */
 .deck-stack-wrapper {
   position: relative;
-  width: 265px;
-  height: 375px;
-  margin: 0 -20px;
+  width: 235px;
+  height: 330px;
+  margin: 0 -18px;
   transform-style: preserve-3d;
   cursor: pointer;
-  z-index: 20;
-  /* Pre-dealt state before scrolling into view */
+  z-index: 30;
+  /* Starts gathered at the hand's flick point before arranging into categories */
   opacity: 0;
-  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+  transform: translate3d(180px, -40px, -80px) rotate(12deg) scale(0.32);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
 }
 
-/* Pre-deal stacked center origin before scroll triggers */
-.deck-stack-wrapper:not(.is-dealt) {
-  transform: translate3d(0, 140px, -100px) rotate(0deg) scale(0.85);
-}
-
-/* Dealt fanned positions triggered on scroll */
-.deck-stack-wrapper.is-dealt.deck-uiux {
+/* Arranged Category Fan Positions (Frame 2 / MacBook Air - 10) */
+.arranged-decks-stage.is-revealed .deck-stack-wrapper.deck-uiux {
   opacity: 1;
-  transform: rotate(-18deg) translateY(45px);
-  transition-delay: 0.05s;
+  transform: rotate(-18deg) translateY(36px);
+  transition-delay: 0.04s;
 }
 
-.deck-stack-wrapper.is-dealt.deck-graphic {
+.arranged-decks-stage.is-revealed .deck-stack-wrapper.deck-graphic {
   opacity: 1;
   transform: rotate(-6deg) translateY(0px);
-  transition-delay: 0.16s;
+  transition-delay: 0.12s;
 }
 
-.deck-stack-wrapper.is-dealt.deck-sewing {
+.arranged-decks-stage.is-revealed .deck-stack-wrapper.deck-sewing {
   opacity: 1;
-  transform: rotate(6deg) translateY(8px);
-  transition-delay: 0.27s;
+  transform: rotate(6deg) translateY(6px);
+  transition-delay: 0.20s;
 }
 
-.deck-stack-wrapper.is-dealt.deck-others {
+.arranged-decks-stage.is-revealed .deck-stack-wrapper.deck-others {
   opacity: 1;
-  transform: rotate(20deg) translateY(65px);
-  transition-delay: 0.38s;
+  transform: rotate(19deg) translateY(48px);
+  transition-delay: 0.28s;
 }
 
-/* 
-  HOVERED DECK:
-  Lifts to z-index: 100 (well above .stage-local-dimmer at z-index: 10).
-  Cards stay 100% sharp and vivid while only the stage background behind them dulls down.
-*/
-.deck-stack-wrapper.is-dealt.is-open,
-.deck-stack-wrapper.is-dealt:hover {
+/* Hovering an arranged deck lifts it above the dimmer and fans its cards */
+.arranged-decks-stage.is-revealed .deck-stack-wrapper.is-open,
+.arranged-decks-stage.is-revealed .deck-stack-wrapper:hover {
   z-index: 100 !important;
   transition-delay: 0s !important;
-  transform: rotate(0deg) translateY(-20px) scale(1.02) !important;
+  transform: rotate(0deg) translateY(-30px) scale(1.03) !important;
 }
 
 /* Nested Project Cards inside each Deck */
@@ -463,7 +288,7 @@ body {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  border-radius: 26px;
+  border-radius: 22px;
   cursor: pointer;
   transform-origin: bottom center;
   transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s;
@@ -491,30 +316,30 @@ body {
 /* Fanned-out and flipped positions on hover */
 .deck-stack-wrapper:hover .project-fan-card[data-index="0"],
 .deck-stack-wrapper.is-open .project-fan-card[data-index="0"] {
-  transform: translate3d(-170px, -100px, 60px) rotate(-14deg) rotateY(180deg);
+  transform: translate3d(-155px, -95px, 60px) rotate(-14deg) rotateY(180deg);
   z-index: 20;
 }
 
 .deck-stack-wrapper:hover .project-fan-card[data-index="1"],
 .deck-stack-wrapper.is-open .project-fan-card[data-index="1"] {
-  transform: translate3d(-60px, -135px, 90px) rotate(-5deg) rotateY(180deg);
+  transform: translate3d(-55px, -125px, 90px) rotate(-5deg) rotateY(180deg);
   z-index: 25;
 }
 
 .deck-stack-wrapper:hover .project-fan-card[data-index="2"],
 .deck-stack-wrapper.is-open .project-fan-card[data-index="2"] {
-  transform: translate3d(60px, -135px, 90px) rotate(5deg) rotateY(180deg);
+  transform: translate3d(55px, -125px, 90px) rotate(5deg) rotateY(180deg);
   z-index: 24;
 }
 
 .deck-stack-wrapper:hover .project-fan-card[data-index="3"],
 .deck-stack-wrapper.is-open .project-fan-card[data-index="3"] {
-  transform: translate3d(170px, -100px, 60px) rotate(14deg) rotateY(180deg);
+  transform: translate3d(155px, -95px, 60px) rotate(14deg) rotateY(180deg);
   z-index: 21;
 }
 
 .deck-stack-wrapper:hover .project-fan-card:hover {
-  transform: translateY(-160px) scale(1.08) rotateY(180deg) !important;
+  transform: translateY(-145px) scale(1.08) rotateY(180deg) !important;
   z-index: 40 !important;
 }
 
@@ -522,24 +347,20 @@ body {
 .flip-face {
   position: absolute;
   inset: 0;
-  border-radius: 26px;
+  border-radius: 22px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  box-shadow: 0 16px 36px rgba(63, 35, 20, 0.2);
-  border: 1.5px solid rgba(63, 35, 20, 0.4);
+  box-shadow: 0 14px 32px rgba(63, 35, 20, 0.22);
+  border: 1.5px solid rgba(63, 35, 20, 0.45);
   overflow: hidden;
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.card-front-face {
-  position: relative;
-}
-
 .card-rim-text {
-  font-size: 0.68rem;
+  font-size: 0.64rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -547,9 +368,9 @@ body {
 }
 
 .card-handdrawn-circle {
-  width: 104px;
-  height: 104px;
-  margin: 18px auto 0;
+  width: 92px;
+  height: 92px;
+  margin: 12px auto 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -562,59 +383,43 @@ body {
 }
 
 .card-deck-title {
-  font-size: 1.55rem;
+  font-size: 1.42rem;
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-top: auto;
 }
 
-/* Deck Colors */
+/* Deck Palette */
 .color-tangelo {
   background-color: var(--color-tangelo);
   color: #FFFFFF;
 }
-.color-tangelo .card-rim-text {
-  color: rgba(255, 255, 255, 0.9);
-}
-.color-tangelo .card-handdrawn-circle path {
-  stroke: #1F1008;
-}
+.color-tangelo .card-rim-text { color: rgba(255, 255, 255, 0.9); }
+.color-tangelo .card-handdrawn-circle path { stroke: #1F1008; }
 
 .color-botticelli {
   background-color: var(--color-botticelli);
   color: var(--color-chocolate);
 }
-.color-botticelli .card-rim-text {
-  color: rgba(92, 50, 30, 0.85);
-}
-.color-botticelli .card-handdrawn-circle path {
-  stroke: var(--color-chocolate);
-}
+.color-botticelli .card-rim-text { color: rgba(92, 50, 30, 0.85); }
+.color-botticelli .card-handdrawn-circle path { stroke: var(--color-chocolate); }
 
 .color-chocolate {
   background-color: var(--color-chocolate);
   color: #FFFFFF;
 }
-.color-chocolate .card-rim-text {
-  color: rgba(255, 255, 255, 0.9);
-}
-.color-chocolate .card-handdrawn-circle path {
-  stroke: #180B05;
-}
+.color-chocolate .card-rim-text { color: rgba(255, 255, 255, 0.9); }
+.color-chocolate .card-handdrawn-circle path { stroke: #180B05; }
 
 .color-others {
   background-color: var(--color-tangelo);
   color: #FFFFFF;
 }
-.color-others .card-rim-text {
-  color: rgba(255, 255, 255, 0.9);
-}
-.color-others .card-handdrawn-circle path {
-  stroke: #1F1008;
-}
+.color-others .card-rim-text { color: rgba(255, 255, 255, 0.9); }
+.color-others .card-handdrawn-circle path { stroke: #1F1008; }
 
-/* Flipped Card Back */
+/* Flipped Card Back (Project Brief) */
 .card-back-face {
   background-color: var(--color-surface);
   color: var(--color-text-dark);
@@ -625,7 +430,7 @@ body {
 .back-top {
   display: flex;
   justify-content: space-between;
-  font-size: 0.68rem;
+  font-size: 0.64rem;
   font-weight: 700;
   color: var(--color-tangelo);
   letter-spacing: 0.05em;
@@ -634,48 +439,60 @@ body {
 }
 
 .back-project-name {
-  font-size: 1.12rem;
+  font-size: 1.05rem;
   font-weight: 700;
   line-height: 1.2;
   color: var(--color-chocolate);
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .back-brief {
-  font-size: 0.76rem;
-  line-height: 1.45;
+  font-size: 0.73rem;
+  line-height: 1.42;
   color: var(--color-text-dark);
   opacity: 0.88;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .back-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 10px;
+  gap: 4px;
+  margin-top: 8px;
 }
 
 .back-tags span {
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 600;
   background: rgba(92, 50, 30, 0.08);
-  padding: 3px 6px;
+  padding: 2px 6px;
   border-radius: 4px;
 }
 
 .back-click-indicator {
   margin-top: auto;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
   color: var(--color-tangelo);
   text-align: right;
   letter-spacing: 0.04em;
 }
 
-/* Internships Section */
-.internships-section {
-  padding-top: 40px;
+/* ========================================================= */
+/* 2. BELOW-FOLD INTERNSHIPS & FOOTER                        */
+/* ========================================================= */
+.below-fold-container {
+  background-color: #FFFFFF;
+  position: relative;
+  z-index: 40;
+  border-top: 1px solid var(--color-line);
+  padding: 64px 48px 80px;
+}
+
+.internships-section,
+.site-footer {
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .section-tag {
@@ -700,7 +517,7 @@ body {
 }
 
 .intern-item {
-  background: var(--color-surface);
+  background: #FAFAFA;
   border: 1.5px solid var(--color-line);
   border-radius: 20px;
   padding: 24px;
@@ -744,7 +561,6 @@ body {
   margin-bottom: 6px;
 }
 
-/* Footer */
 .site-footer {
   border-top: 1px solid var(--color-line);
   margin-top: 60px;
@@ -924,36 +740,18 @@ body {
   background: var(--color-chocolate);
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 900px) {
-  .title-hero {
-    padding: 24px 20px;
+/* Responsive */
+@media (max-width: 960px) {
+  .sticky-viewport {
+    padding: 20px 24px;
   }
-  .corner-domino {
-    width: 72px;
-    height: 84px;
+  .deck-stack-wrapper {
+    width: 175px;
+    height: 250px;
+    margin: 0 -14px;
   }
-  .domino-fill {
-    width: 54px;
-    height: 62px;
-  }
-  .line-1, .line-2, .line-3 {
-    display: none;
-  }
-  .poster-grid {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .poster-left, .poster-right {
-    justify-content: center;
-    align-items: center;
-  }
-  .decks-row {
-    flex-wrap: wrap;
-    gap: 40px;
-  }
-  .deck-stack-wrapper.is-dealt {
-    margin: 0;
-    transform: none !important;
+  .hand-actor {
+    width: 210px;
+    right: 16px;
   }
 }

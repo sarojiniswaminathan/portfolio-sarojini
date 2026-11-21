@@ -1,6 +1,6 @@
 /**
  * Sarojini Swaminathan Portfolio
- * Editorial Title Hero + Scroll-Triggered Dealing Decks + Scoped Stage Dimmer
+ * Scroll-Scrubbed Hand Flick Sequence -> Arranges Cards into 4 Category Decks
  */
 
 const handDrawnLoopSVG = `
@@ -17,6 +17,7 @@ const handDrawnLoopSVG = `
 </svg>
 `;
 
+// Existing 4 Decks & All Project Information Preserved
 const skillDecks = [
   {
     id: "uiux",
@@ -297,9 +298,17 @@ const internships = [
   }
 ];
 
-const fanStage = document.getElementById("fanStage");
+// DOM References
+const scrollTrack = document.getElementById("scrollTrack");
+const stickyViewport = document.getElementById("stickyViewport");
+const handActor = document.getElementById("handActor");
+const heldCard = document.getElementById("heldCard");
+const flickLines = document.getElementById("flickLines");
+const arrangedStage = document.getElementById("arrangedStage");
 const decksRow = document.getElementById("decksRow");
+const scrollHint = document.getElementById("scrollHint");
 
+// Render the 4 Skillset Decks
 function renderDecks() {
   decksRow.innerHTML = skillDecks.map((deck) => {
     const cardsHTML = deck.projects.map((proj, pIndex) => `
@@ -343,48 +352,87 @@ function renderDecks() {
   }).join("");
 
   attachScopedDimmerListeners();
-  setupScrollDealObserver();
 }
 
-// Scoped Dimmer: Dulls ONLY the .card-fan-stage background, never the whole page
+// Scoped Stage Dimmer (Dulls only the stage area behind the hovered deck)
 function attachScopedDimmerListeners() {
   const deckWrappers = document.querySelectorAll(".deck-stack-wrapper");
   deckWrappers.forEach(deck => {
     deck.addEventListener("mouseenter", () => {
-      fanStage.classList.add("has-active-deck");
+      if (arrangedStage.classList.contains("is-revealed")) {
+        stickyViewport.classList.add("has-active-deck");
+      }
     });
     deck.addEventListener("mouseleave", () => {
-      fanStage.classList.remove("has-active-deck");
+      stickyViewport.classList.remove("has-active-deck");
     });
   });
 }
 
-// Deals the 4 decks outward once the user scrolls into the Work section
-function setupScrollDealObserver() {
-  const deckWrappers = document.querySelectorAll(".deck-stack-wrapper");
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        deckWrappers.forEach(d => d.classList.add("is-dealt"));
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.25 });
-
-  observer.observe(fanStage);
-}
-
 window.toggleDeckMobile = function(element) {
+  if (!arrangedStage.classList.contains("is-revealed")) return;
   const wasOpen = element.classList.contains("is-open");
   document.querySelectorAll(".deck-stack-wrapper").forEach(d => d.classList.remove("is-open"));
   
   if (!wasOpen) {
     element.classList.add("is-open");
-    fanStage.classList.add("has-active-deck");
+    stickyViewport.classList.add("has-active-deck");
   } else {
-    fanStage.classList.remove("has-active-deck");
+    stickyViewport.classList.remove("has-active-deck");
   }
 };
+
+// =========================================================
+// SCROLL-DRIVEN HAND FLICK SEQUENCE (Frames 2 -> 7 -> 8 -> 9 -> 10)
+// =========================================================
+function updateScrollSequence() {
+  const rect = scrollTrack.getBoundingClientRect();
+  const scrollableDistance = rect.height - window.innerHeight;
+  if (scrollableDistance <= 0) return;
+
+  // Normalized scroll progress [0..1] across the sticky track
+  const progress = Math.min(1, Math.max(0, -rect.top / scrollableDistance));
+
+  // Fade out scroll prompt once user starts scrolling
+  scrollHint.style.opacity = progress > 0.08 ? "0" : "0.65";
+
+  // 1. Hand & Wrist Motion across the 5 storyboard frames:
+  // Frame 2 (0.0): Upright at top-right (0px, 0px, 0deg)
+  // Frame 7 (0.25): Tilts forward (-18deg)
+  // Frame 8 (0.50): Sweeps lower and tilts (-34deg)
+  // Frame 9 (0.72): Drops toward lower-right table area (+34vh, -26deg)
+  // Frame 10 (0.85+): Settles at bottom-right corner after flicking cards
+  const translateY = Math.min(progress / 0.78, 1) * (window.innerHeight * 0.42);
+  const translateX = Math.sin(Math.min(progress / 0.85, 1) * Math.PI) * -32;
+  const rotateDeg = progress < 0.55
+    ? -(progress / 0.55) * 34
+    : -34 + ((progress - 0.55) / 0.45) * 14;
+
+  handActor.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) rotate(${rotateDeg}deg)`;
+
+  // 2. Card Release & Flick Trigger at 72% Scroll
+  if (progress >= 0.72) {
+    // Flick motion lines appear around the hand
+    flickLines.style.opacity = "1";
+    // Held card shoots out of the fingers onto the table
+    heldCard.style.transform = "translate(-95px, 45px) rotate(-38deg) scale(0.85)";
+    heldCard.style.opacity = "0";
+    // 4 category decks fan out into their arc positions
+    arrangedStage.classList.add("is-revealed");
+  } else {
+    flickLines.style.opacity = "0";
+    heldCard.style.transform = "translate(0, 0) rotate(0deg) scale(1)";
+    heldCard.style.opacity = "1";
+    arrangedStage.classList.remove("is-revealed");
+    stickyViewport.classList.remove("has-active-deck");
+  }
+}
+
+window.addEventListener("scroll", () => {
+  requestAnimationFrame(updateScrollSequence);
+}, { passive: true });
+
+window.addEventListener("resize", updateScrollSequence);
 
 // Render Internships
 const internshipsGrid = document.getElementById("internshipsGrid");
@@ -439,5 +487,7 @@ modalBackdrop.addEventListener("click", (e) => {
   if (e.target === modalBackdrop) modalBackdrop.classList.remove("open");
 });
 
+// Initialize
 renderDecks();
 renderInternships();
+updateScrollSequence();
